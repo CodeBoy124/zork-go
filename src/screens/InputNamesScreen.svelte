@@ -16,7 +16,7 @@
 	}
 </script>
 
-<div class="screen">
+<div class="screen bg-wood">
 	<div class="insert-area bg-paper">
 		<textarea bind:value={names_input.current} class="input"></textarea>
 	</div>

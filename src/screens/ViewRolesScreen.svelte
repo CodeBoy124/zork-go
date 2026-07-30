@@ -8,11 +8,19 @@
 			sheet_id = roles.length - 1;
 		}
 	});
+
+	function toNextScreen() {
+		sheet_id++;
+		if (sheet_id >= roles.length) {
+			document.exitFullscreen();
+			sheet_id = roles.length - 1;
+		}
+	}
 </script>
 
-<div class="screen">
+<div class="screen bg-wood">
 	<div class="current bg-paper">
-		<button onclick={() => sheet_id++}>
+		<button onclick={toNextScreen}>
 			<h1 class="title">{roles[sheet_id].title}: {roles[sheet_id].name}</h1>
 		</button>
 		<p class="scrollable linebreaks">{roles[sheet_id].prayer.replace(/\n/g, '\n\n')}</p>

@@ -3,6 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: 'main'
+  workflow_dispatch:
 
 jobs:
   build_site:
@@ -45,6 +46,10 @@ jobs:
     permissions:
       pages: write
       id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Deploy

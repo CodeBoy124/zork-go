@@ -21,7 +21,11 @@
 		<textarea bind:value={names_input.current} class="input"></textarea>
 	</div>
 	<div class="nav-area">
-		<button class="next-btn" onclick={generateRolesAndGoNext}>Next</button>
+		<button class="next-btn shadow" onclick={generateRolesAndGoNext} aria-label="Volgende">
+			<div class="next-btn-highlight"></div>
+			<div class="next-btn-icon"></div>
+			<div class="next-btn-wires shadow"></div>
+		</button>
 	</div>
 </div>
 
@@ -56,15 +60,56 @@
 		padding: var(--padding);
 		display: flex;
 		align-items: center;
+		justify-content: center;
 	}
 
 	.next-btn {
-		width: 100%;
-		height: 100%;
-		background-color: red;
-		color: black;
-		border: 5px solid black;
-		border-radius: 5px;
-		font-size: large;
+		position: relative;
+		width: 75px;
+		height: 75px;
+		border-radius: 50%;
+		border: 10px solid gray;
+		cursor: pointer;
+		background: #2fff00;
+		background: radial-gradient(circle, #2fff00 0%, #308f00 100%);
+		overflow-y: visible;
+	}
+
+	.next-btn-highlight {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 30%;
+		height: 30%;
+		background: rgba(255, 255, 255, 0.5);
+		background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+		border-radius: 50%;
+		transform: translate(0, -100%);
+	}
+
+	.next-btn-icon {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 0;
+		height: 0;
+		transform: translate(-50%, -50%);
+
+		border-top: 10px solid transparent;
+		border-bottom: 10px solid transparent;
+
+		border-left: 15px solid rgba(0, 0, 0, 0.7);
+	}
+
+	.next-btn-wires {
+		position: absolute;
+		left: 50%;
+		top: calc(100% + 9px);
+		transform: translate(-50%, 0);
+		width: 0;
+		height: 100vh;
+		border-left: 5px solid red;
+		border-right: 5px solid blue;
+		filter: brightness(75%);
 	}
 </style>

@@ -23,7 +23,7 @@
 		<button onclick={toNextScreen}>
 			<h1 class="title">{roles[sheet_id].title}: {roles[sheet_id].name}</h1>
 		</button>
-		<p class="scrollable linebreaks">{roles[sheet_id].prayer.replace(/\n/g, '\n\n')}</p>
+		<p class="prayer">{roles[sheet_id].prayer.replace(/\n/g, '\n\n')}</p>
 	</div>
 	<h2 class="upcomming">Zo: {sheet_id + 1 >= roles.length ? '-' : roles[sheet_id + 1].name}</h2>
 </div>
@@ -59,22 +59,19 @@
 		gap: 10px;
 	}
 
-	.scrollable {
+	.prayer {
 		flex: 1 1 auto;
 		overflow-y: scroll;
+		white-space: pre-line;
 	}
 
 	.upcomming {
 		width: 100%;
 		height: 15vh;
-		color: white;
+		color: rgba(255, 255, 255, 0.5);
 		padding: 0 var(--padding);
 		display: flex;
 		align-items: center;
 		font-size: var(--heading-font-size);
-	}
-
-	.linebreaks {
-		white-space: pre-line;
 	}
 </style>

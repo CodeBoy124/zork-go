@@ -23,6 +23,12 @@
 		margin: 0;
 		box-sizing: border-box;
 		font-family: 'Courier New', Courier, monospace;
+		word-break: break-word;
+	}
+
+	:global(body) {
+		height: 100vh;
+		overflow: hidden;
 	}
 
 	:global(body),
@@ -32,5 +38,11 @@
 
 	:global(.bg-paper) {
 		background-image: url('/images/paper.png');
+	}
+
+	:global(.bg-paper, .shadow) {
+		box-shadow: -10px 10px 5px 0px rgba(0, 0, 0, 0.27);
+		-webkit-box-shadow: -10px 10px 5px 0px rgba(0, 0, 0, 0.27);
+		-moz-box-shadow: -10px 10px 5px 0px rgba(0, 0, 0, 0.27);
 	}
 </style>

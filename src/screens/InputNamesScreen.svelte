@@ -104,10 +104,10 @@
 	.next-btn-wires {
 		position: absolute;
 		left: 50%;
-		top: calc(100% + 9px);
+		top: calc(100% + 10px);
 		transform: translate(-50%, 0);
 		width: 0;
-		height: 100vh;
+		height: calc(var(--padding) - 15px);
 		border-left: 5px solid red;
 		border-right: 5px solid blue;
 		filter: brightness(75%);

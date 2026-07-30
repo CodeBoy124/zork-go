@@ -26,11 +26,6 @@
 		word-break: break-word;
 	}
 
-	:global(body) {
-		height: 100vh;
-		overflow: hidden;
-	}
-
 	:global(body),
 	:global(.bg-wood) {
 		background-image: url('/images/wood.png');

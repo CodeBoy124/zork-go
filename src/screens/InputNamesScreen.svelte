@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { generateRoles, rolesToCopyMessage } from '$lib/generate_roles';
+	import { persistedState } from 'svelte-persisted-state';
 
 	let props: { onNext: (roles: { title: string; name: string; prayer: string }[]) => void } =
 		$props();
-	let names_input = $state(
+	let names_input = persistedState(
+		'names_input',
 		'opening\n\ngebedsintenties\n\nmysteries\n\nafsluitingsgebeden\n\nsalveregina'
 	);
 
 	function generateRolesAndGoNext() {
-		const rolverdeling = generateRoles(names_input);
+		const rolverdeling = generateRoles(names_input.current);
 		navigator.clipboard.writeText(rolesToCopyMessage(rolverdeling));
 		props.onNext(rolverdeling);
 	}
@@ -16,7 +18,7 @@
 
 <div class="screen">
 	<div class="insert-area bg-paper">
-		<textarea bind:value={names_input} class="input"></textarea>
+		<textarea bind:value={names_input.current} class="input"></textarea>
 	</div>
 	<div class="nav-area">
 		<button class="next-btn" onclick={generateRolesAndGoNext}>Next</button>

@@ -25,15 +25,15 @@
 
 <style>
 	.screen {
-		max-width: 500px;
+		max-width: var(--max-screen-width);
 		margin: auto;
 		width: 100vw;
 		height: 100vh;
 	}
 
 	.insert-area {
-		border-radius: 0 0 8vw 8vw;
-		padding: 8vw;
+		border-radius: 0 0 var(--padding) var(--padding);
+		padding: var(--padding);
 		width: 100%;
 		height: 85vh;
 	}
@@ -51,7 +51,7 @@
 		width: 100%;
 		height: 15vh;
 		color: white;
-		padding: min(8vw, 3vh) 8vw;
+		padding: var(--padding);
 		display: flex;
 		align-items: center;
 	}

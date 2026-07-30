@@ -11,6 +11,13 @@
 {@render children()}
 
 <style>
+	:global(:root) {
+		--max-screen-width: 500px;
+		--base-font-size: 24px;
+		--heading-font-size: 32px;
+		--padding: min(30px, 5vh);
+	}
+
 	:global(*) {
 		padding: 0;
 		margin: 0;

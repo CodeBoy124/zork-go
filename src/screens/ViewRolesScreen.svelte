@@ -30,20 +30,20 @@
 	}
 
 	.screen {
-		max-width: 500px;
+		max-width: var(--max-screen-width);
 		margin: auto;
 		width: 100vw;
 		height: 100vh;
-		font-size: 24px;
+		font-size: var(--base-font-size);
 	}
 
 	.title {
-		font-size: 32px;
+		font-size: var(--heading-font-size);
 	}
 
 	.current {
-		border-radius: 0 0 8vw 8vw;
-		padding: 8vw;
+		border-radius: 0 0 var(--padding) var(--padding);
+		padding: var(--padding);
 		width: 100%;
 		height: 85vh;
 		display: flex;
@@ -60,10 +60,10 @@
 		width: 100%;
 		height: 15vh;
 		color: white;
-		padding: 0 8vw;
+		padding: 0 var(--padding);
 		display: flex;
 		align-items: center;
-		font-size: 32px;
+		font-size: var(--heading-font-size);
 	}
 
 	.linebreaks {

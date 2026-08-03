@@ -12,8 +12,8 @@
 	let gebedsintenties = $state('');
 
 	function generateRolesAndGoNext() {
-		const rolverdeling = generateRoles(names_input.current, gebedsintenties);
-		navigator.clipboard.writeText(rolesToCopyMessage(rolverdeling));
+		const { rolverdeling, picked_names } = generateRoles(names_input.current, gebedsintenties);
+		navigator.clipboard.writeText(rolesToCopyMessage(rolverdeling, picked_names));
 		props.onNext(rolverdeling);
 	}
 </script>

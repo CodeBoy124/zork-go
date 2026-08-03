@@ -65,9 +65,9 @@ function pickASingleName(
 function pickNamesUsingSchema(
 	role_groups: { [name: string]: string[] },
 	schema: { [name: string]: number }
-) {
+): string[] {
 	let name_occurences: { [name: string]: number } = {};
-	let people_per_role: { [name: string]: string[] } = {};
+	let picked_people: string[] = [];
 	let last_name = '';
 
 	for (let names of Object.values(role_groups)) {
@@ -78,29 +78,25 @@ function pickNamesUsingSchema(
 
 	for (let key of Object.keys(schema)) {
 		for (let i = 0; i < schema[key]; i++) {
-			if (!(key in people_per_role)) people_per_role[key] = [];
 			const name = pickASingleName(name_occurences, role_groups[key], last_name);
 
 			last_name = name;
-			people_per_role[key].push(name);
+			picked_people.push(name);
 
 			if (!(name in name_occurences)) name_occurences[name] = 0;
 			name_occurences[name]++;
 		}
 	}
-	return people_per_role;
+	return picked_people;
 }
 
-function insertPickedNamesIntoText(
-	picked_names: { [name: string]: string[] },
-	gebedsintenties: string
-) {
+export function insertPickedNamesIntoText(picked_names: string[], gebedsintenties: string) {
 	// TODO: validate input
 
 	let parts: { title: string; mystery?: string; name: string; prayer: string }[] = [
 		{
 			title: 'Opening',
-			name: picked_names.opening[0],
+			name: picked_names.splice(0, 1)[0],
 			prayer: `In de naam van de Vader, en de Zoon en de Heilige Geest. Amen.
 Ik geloof in God... (De twaalf artikelen van het geloof (geloofsbelijdenis))
 Onze Vader...
@@ -111,7 +107,7 @@ Eer aan de Vader...`
 		},
 		{
 			title: 'Intenties',
-			name: picked_names.gebedsintenties[0],
+			name: picked_names.splice(0, 1)[0],
 			prayer: gebedsintenties == '' ? `<Gebedsintenties>` : gebedsintenties
 		}
 	];
@@ -127,7 +123,7 @@ Eer aan de Vader...`
 		parts.push({
 			title: `${i + 1}e mysterie`,
 			mystery: mysterie_titles[i],
-			name: `${picked_names.mysteries[i * 2]} + ${picked_names.mysteries[i * 2 + 1]}`,
+			name: `${picked_names.splice(0, 1)[0]} + ${picked_names.splice(0, 1)[0]}`,
 			prayer: `(${mysterie_titles[i]})
 - Persoon 1 kondigt het mysterie aan
 - Persoon 1 (start) en persoon 2 (maakt af) het Onze Vader
@@ -140,7 +136,7 @@ Eer aan de Vader...`
 	parts.push(
 		{
 			title: 'Toewijdingsgebed',
-			name: picked_names.afsluitingsgebeden[0],
+			name: picked_names.splice(0, 1)[0],
 			prayer: `Mijn koningin, mijn Moeder,
 Ik geef mezelf volledig aan U en toon U mijn aanhankelijkheid.
 Ik offer U deze dag mijn ogen, mijn oren, mijn mond, mijn hart, geheel mijzelf, zonder voorbehoud.
@@ -148,7 +144,7 @@ Daarom goede Moeder, omdat ik de Uwe ben, neem mij en bewaar mij als Uw eigendom
 		},
 		{
 			title: 'Gebed tot de Heilige Geest',
-			name: picked_names.afsluitingsgebeden[1],
+			name: picked_names.splice(0, 1)[0],
 			prayer: `Kom Heilig Geest, verlicht mijn hart om de dingen te zien die van God zijn.
 Kom H. Geest, verlicht mijn verstand, om de dingen te kennen die van God zijn.
 Kom H. Geest, in mijn ziel, dat ik alleen God toebehoor.
@@ -157,7 +153,7 @@ Amen.`
 		},
 		{
 			title: 'Gebed tot de Aartsengel Michaël',
-			name: picked_names.afsluitingsgebeden[2],
+			name: picked_names.splice(0, 1)[0],
 			prayer: `Heilige Aartsengel Michaël, verdedig ons in de strijd, wees onze bescherming tegen de boosheid en de listen van de duivel.
 Wij smeken ootmoedig dat God hem zijn macht doe gevoelen.
 En Gij, vorst der hemelse legerscharen, drijf Satan en de andere boze geesten, die tot verderf van de zielen over de wereld rondgaan, door de goddelijke kracht in de hel terug.
@@ -172,7 +168,7 @@ Amen.`
 		},
 		{
 			title: 'Salve Regina',
-			name: picked_names.salveregina[0],
+			name: picked_names.splice(0, 1)[0],
 			prayer: `Salve, Regina, Mater misericordiae, vita, dulcedo, et spes nostra, salve.
 Ad te clamamus, exsules filii Evae.
 Ad te suspiramus, gementes et flentes in hac lacrimarum valle.
@@ -187,11 +183,23 @@ O clemens, O pia, O dulcis Virgo Maria.`
 export function generateRoles(txt: string, gebedsintenties: string) {
 	const role_groups = findNamesPerGroup(txt);
 	const picked_names = pickNamesUsingSchema(role_groups, ROLE_SCHEMA);
-	return insertPickedNamesIntoText(picked_names, gebedsintenties);
+	return {
+		rolverdeling: insertPickedNamesIntoText(
+			JSON.parse(JSON.stringify(picked_names)),
+			gebedsintenties
+		),
+		picked_names: picked_names
+	};
 }
 
 export function rolesToCopyMessage(
-	parts: { title: string; mystery?: string; name: string; prayer: string }[]
+	parts: { title: string; mystery?: string; name: string; prayer: string }[],
+	picked_names: string[]
 ) {
-	return parts.map((v) => `${v.title}${v.mystery ? ` (${v.mystery})` : ''}: ${v.name}`).join('\n');
+	const share_link = 'https://codeboy124.github.io/zork-go/share/?v=' + picked_names.join('%2C');
+	return (
+		share_link +
+		'\n\n' +
+		parts.map((v) => `${v.title}${v.mystery ? ` (${v.mystery})` : ''}: ${v.name}`).join('\n')
+	);
 }

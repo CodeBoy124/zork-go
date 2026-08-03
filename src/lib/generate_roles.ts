@@ -38,6 +38,10 @@ function findNamesPerGroup(txt: string) {
 	return role_groups;
 }
 
+function linearToLowFractal(linear_fractal: number) {
+	return Math.pow(linear_fractal, 4);
+}
+
 function pickASingleName(
 	name_occurences: { [name: string]: number },
 	people_in_role: string[],
@@ -53,7 +57,9 @@ function pickASingleName(
 	if (possible_names_sorted.length > 1)
 		possible_names_sorted = possible_names_sorted.filter((n) => n != last_name);
 
-	return possible_names_sorted[Math.floor(Math.random() * possible_names_sorted.length)];
+	return possible_names_sorted[
+		Math.floor(linearToLowFractal(Math.random()) * possible_names_sorted.length)
+	];
 }
 
 function pickNamesUsingSchema(

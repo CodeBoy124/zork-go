@@ -15,7 +15,7 @@
 		--max-screen-width: 500px;
 		--base-font-size: 24px;
 		--heading-font-size: 32px;
-		--padding: min(30px, 5vh);
+		--padding: min(30px, 5dvh);
 	}
 
 	:global(*) {

@@ -2,6 +2,7 @@
 	const { roles }: { roles: { title: string; name: string; prayer: string }[] } = $props();
 
 	let sheet_id = $state(0);
+	let prayer_text_el: HTMLElement | null = null;
 
 	$effect(() => {
 		if (sheet_id > roles.length) {
@@ -15,6 +16,14 @@
 			document.exitFullscreen();
 			sheet_id = roles.length - 1;
 		}
+
+		if (prayer_text_el != null) {
+			prayer_text_el.scrollTo({
+				top: 0,
+				left: 0,
+				behavior: 'smooth'
+			});
+		}
 	}
 </script>
 
@@ -23,7 +32,7 @@
 		<button onclick={toNextScreen}>
 			<h1 class="title">{roles[sheet_id].title}: {roles[sheet_id].name}</h1>
 		</button>
-		<p class="prayer">{roles[sheet_id].prayer.replace(/\n/g, '\n\n')}</p>
+		<p class="prayer" bind:this={prayer_text_el}>{roles[sheet_id].prayer.replace(/\n/g, '\n\n')}</p>
 	</div>
 	<h2 class="upcomming">Zo: {sheet_id + 1 >= roles.length ? '-' : roles[sheet_id + 1].name}</h2>
 </div>
@@ -40,8 +49,8 @@
 	.screen {
 		max-width: var(--max-screen-width);
 		margin: auto;
-		width: 100vw;
-		height: 100vh;
+		width: 100dvw;
+		height: 100dvh;
 		font-size: var(--base-font-size);
 	}
 
@@ -53,7 +62,7 @@
 		border-radius: 0 0 var(--padding) var(--padding);
 		padding: var(--padding);
 		width: 100%;
-		height: 85vh;
+		height: 85dvh;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
@@ -67,7 +76,7 @@
 
 	.upcomming {
 		width: 100%;
-		height: 15vh;
+		height: 15dvh;
 		color: rgba(255, 255, 255, 0.5);
 		padding: 0 var(--padding);
 		display: flex;

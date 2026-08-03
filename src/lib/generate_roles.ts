@@ -97,7 +97,7 @@ function insertPickedNamesIntoText(
 ) {
 	// TODO: validate input
 
-	let parts = [
+	let parts: { title: string; mystery?: string; name: string; prayer: string }[] = [
 		{
 			title: 'Opening',
 			name: picked_names.opening[0],
@@ -126,7 +126,8 @@ Eer aan de Vader...`
 	for (let i = 0; i < 5; i++) {
 		parts.push({
 			title: `${i + 1}e mysterie`,
-			name: `${picked_names.mysteries[i * 2]}+${picked_names.mysteries[i * 2 + 1]}`,
+			mystery: mysterie_titles[i],
+			name: `${picked_names.mysteries[i * 2]} + ${picked_names.mysteries[i * 2 + 1]}`,
 			prayer: `(${mysterie_titles[i]})
 - Persoon 1 kondigt het mysterie aan
 - Persoon 1 (start) en persoon 2 (maakt af) het Onze Vader
@@ -189,6 +190,8 @@ export function generateRoles(txt: string, gebedsintenties: string) {
 	return insertPickedNamesIntoText(picked_names, gebedsintenties);
 }
 
-export function rolesToCopyMessage(parts: { title: string; name: string; prayer: string }[]) {
-	return parts.map((v) => v.title + ': ' + v.name).join('\n');
+export function rolesToCopyMessage(
+	parts: { title: string; mystery?: string; name: string; prayer: string }[]
+) {
+	return parts.map((v) => `${v.title}${v.mystery ? ` (${v.mystery})` : ''}: ${v.name}`).join('\n');
 }

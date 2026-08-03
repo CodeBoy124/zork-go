@@ -8,7 +8,6 @@
 	const goToRoleScreen = (roles: { title: string; name: string; prayer: string }[]) => {
 		showInputScreen = false;
 		rolverdeling = roles;
-		document.body.requestFullscreen();
 	};
 </script>
 

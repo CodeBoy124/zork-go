@@ -13,7 +13,6 @@
 	function toNextScreen() {
 		sheet_id++;
 		if (sheet_id >= roles.length) {
-			document.exitFullscreen();
 			sheet_id = roles.length - 1;
 		}
 

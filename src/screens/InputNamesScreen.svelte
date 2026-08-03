@@ -8,9 +8,10 @@
 		'names_input',
 		'opening\n\ngebedsintenties\n\nmysteries\n\nafsluitingsgebeden\n\nsalveregina'
 	);
+	let gebedsintenties = $state('');
 
 	function generateRolesAndGoNext() {
-		const rolverdeling = generateRoles(names_input.current);
+		const rolverdeling = generateRoles(names_input.current, gebedsintenties);
 		navigator.clipboard.writeText(rolesToCopyMessage(rolverdeling));
 		props.onNext(rolverdeling);
 	}
@@ -18,7 +19,9 @@
 
 <div class="screen bg-wood">
 	<div class="insert-area bg-paper">
-		<textarea bind:value={names_input.current} class="input"></textarea>
+		<textarea bind:value={names_input.current} class="input" placeholder="Mogelijke mensen per rol"
+		></textarea>
+		<textarea bind:value={gebedsintenties} class="input" placeholder="Gebedsintenties"></textarea>
 	</div>
 	<div class="nav-area">
 		<button class="next-btn shadow" onclick={generateRolesAndGoNext} aria-label="Volgende">
@@ -42,6 +45,11 @@
 		padding: var(--padding);
 		width: 100%;
 		height: 85dvh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: var(--padding);
 	}
 
 	.input {

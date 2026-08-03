@@ -91,7 +91,10 @@ function pickNamesUsingSchema(
 	return people_per_role;
 }
 
-function insertPickedNamesIntoText(picked_names: { [name: string]: string[] }) {
+function insertPickedNamesIntoText(
+	picked_names: { [name: string]: string[] },
+	gebedsintenties: string
+) {
 	// TODO: validate input
 
 	let parts = [
@@ -109,7 +112,7 @@ Eer aan de Vader...`
 		{
 			title: 'Intenties',
 			name: picked_names.gebedsintenties[0],
-			prayer: `<Gebedsintenties>` // TODO: Add input so this can also be combined into this program?
+			prayer: gebedsintenties == '' ? `<Gebedsintenties>` : gebedsintenties
 		}
 	];
 
@@ -180,10 +183,10 @@ O clemens, O pia, O dulcis Virgo Maria.`
 	return parts;
 }
 
-export function generateRoles(txt: string) {
+export function generateRoles(txt: string, gebedsintenties: string) {
 	const role_groups = findNamesPerGroup(txt);
 	const picked_names = pickNamesUsingSchema(role_groups, ROLE_SCHEMA);
-	return insertPickedNamesIntoText(picked_names);
+	return insertPickedNamesIntoText(picked_names, gebedsintenties);
 }
 
 export function rolesToCopyMessage(parts: { title: string; name: string; prayer: string }[]) {

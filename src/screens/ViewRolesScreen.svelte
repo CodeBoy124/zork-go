@@ -1,8 +1,10 @@
 <script lang="ts">
+	import BookmarkButton from '../components/BookmarkButton.svelte';
 	const { roles }: { roles: { title: string; name: string; prayer: string }[] } = $props();
 
 	let sheet_id = $state(0);
 	let prayer_text_el: HTMLElement | null = null;
+	let is_last_sheet = $derived(sheet_id == roles.length - 1);
 
 	$effect(() => {
 		if (sheet_id > roles.length) {
@@ -28,23 +30,20 @@
 
 <div class="screen bg-wood">
 	<div class="current bg-paper">
-		<button onclick={toNextScreen}>
-			<h1 class="title">{roles[sheet_id].title}: {roles[sheet_id].name}</h1>
-		</button>
+		<h1 class="title">{roles[sheet_id].title}: {roles[sheet_id].name}</h1>
 		<p class="prayer" bind:this={prayer_text_el}>{roles[sheet_id].prayer.replace(/\n/g, '\n\n')}</p>
 	</div>
-	<h2 class="upcomming">Zo: {sheet_id + 1 >= roles.length ? '-' : roles[sheet_id + 1].name}</h2>
+	{#if !is_last_sheet}
+		<div class="upcomming">
+			<h2 class="upcomming-txt">
+				Zo: {sheet_id + 1 >= roles.length ? '-' : roles[sheet_id + 1].name}
+			</h2>
+			<BookmarkButton action={toNextScreen} />
+		</div>
+	{/if}
 </div>
 
 <style>
-	button {
-		background-color: transparent;
-		border: none;
-		outline: none;
-		padding: 0;
-		margin: 0;
-	}
-
 	.screen {
 		max-width: var(--max-screen-width);
 		margin: auto;
@@ -76,10 +75,17 @@
 	.upcomming {
 		width: 100%;
 		height: 15dvh;
-		color: rgba(255, 255, 255, 0.5);
 		padding: 0 var(--padding);
 		display: flex;
-		align-items: center;
+		justify-content: space-between;
+		align-items: start;
+	}
+
+	.upcomming-txt {
+		color: rgba(255, 255, 255, 0.5);
 		font-size: var(--heading-font-size);
+		height: 100%;
+		display: flex;
+		align-items: center;
 	}
 </style>

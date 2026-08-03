@@ -49,8 +49,8 @@
 	.screen {
 		max-width: var(--max-screen-width);
 		margin: auto;
-		width: 100vw;
-		height: 100vh;
+		width: 100dvw;
+		height: 100dvh;
 		font-size: var(--base-font-size);
 	}
 
@@ -62,7 +62,7 @@
 		border-radius: 0 0 var(--padding) var(--padding);
 		padding: var(--padding);
 		width: 100%;
-		height: 85vh;
+		height: 85dvh;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
@@ -76,7 +76,7 @@
 
 	.upcomming {
 		width: 100%;
-		height: 15vh;
+		height: 15dvh;
 		color: rgba(255, 255, 255, 0.5);
 		padding: 0 var(--padding);
 		display: flex;

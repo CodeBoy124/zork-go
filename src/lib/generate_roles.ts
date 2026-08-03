@@ -19,7 +19,7 @@ function findNamesPerGroup(txt: string) {
 		.filter((v) => v != '');
 
 	for (const line of lines) {
-		const is_name_entry_line = line.startsWith('.');
+		const is_name_entry_line = ['-', '~', '.', '*', ')', '>'].includes(line[0]);
 
 		if (is_name_entry_line) {
 			role_groups[active_group_name].push(line.slice(1).trim());

@@ -26,7 +26,7 @@ function findNamesPerGroup(txt: string) {
 			continue;
 		}
 
-		active_group_name = line;
+		active_group_name = line.toLowerCase().replace(/ /g, '');
 		if (!(active_group_name in role_groups)) {
 			role_groups[active_group_name] = [];
 		}
